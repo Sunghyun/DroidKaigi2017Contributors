@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.lvla.android.droidkaigi2017contributors.infra.api.GitHubService
+import dagger.Component
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import javax.inject.Singleton
 
 @Module
 class ApplicationModule {
@@ -19,8 +21,11 @@ class ApplicationModule {
 
   @Provides
   fun providesOkHttp(): OkHttpClient {
+    val logger = HttpLoggingInterceptor { log -> Timber.tag("OkHttp").v(log) }
+    logger.level = HttpLoggingInterceptor.Level.BASIC
+
     return OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor { log -> Timber.tag("OkHttp").v(log) })
+        .addInterceptor(logger)
         .build()
   }
 
@@ -38,4 +43,10 @@ class ApplicationModule {
   fun provideGitHubService(retrofit: Retrofit): GitHubService {
     return retrofit.create(GitHubService::class.java)
   }
+}
+
+@Singleton
+@Component(modules = arrayOf(ApplicationModule::class))
+interface ApplicationComponent {
+  fun plus(m: Main): MainComponent
 }
