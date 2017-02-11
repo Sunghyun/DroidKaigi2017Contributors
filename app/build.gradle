@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.lvla.android.droidkaigi2017contributors"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+configurations {
+    all {
+        resolutionStrategy {
+            force "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+        }
+    }
+}
+dependencies {
+    final supportLibVersion     = "25.1.1"
+    final ormaVersion           = "4.1.1"
+    final retrofitVersion       = "2.1.0"
+    final okHttpVersion         = "3.6.0"
+    final daggerVersion         = "2.9"
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:design:$supportLibVersion"
+
+
+    // Orma
+    compile "com.github.gfx.android.orma:orma:$ormaVersion"
+    kapt "com.github.gfx.android.orma:orma-processor:$ormaVersion"
+
+    // ReactiveX
+    compile 'io.reactivex.rxjava2:rxjava:2.0.2'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    // Retrofit
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+    // Dagger2
+    compile "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.jakewharton.timber:timber:4.1.2'
+}
+repositories {
+    mavenCentral()
+}
