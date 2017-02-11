@@ -1,6 +1,9 @@
 package com.lvla.android.droidkaigi2017contributors.di
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.lvla.android.droidkaigi2017contributors.infra.api.GitHubService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,6 +14,8 @@ import timber.log.Timber
 
 @Module
 class ApplicationModule {
+
+  private val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
   @Provides
   fun providesOkHttp(): OkHttpClient {
@@ -24,9 +29,13 @@ class ApplicationModule {
     return Retrofit.Builder()
         .client(oktHttpClient)
         .baseUrl("https://api.github.com")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
   }
 
+  @Provides
+  fun provideGitHubService(retrofit: Retrofit): GitHubService {
+    return retrofit.create(GitHubService::class.java)
+  }
 }
