@@ -5,7 +5,9 @@ import com.lvla.android.droidkaigi2017contributors.infra.api.GitHubClient
 import com.lvla.android.droidkaigi2017contributors.infra.dao.ContributorDao
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ContributorRepository @Inject constructor(private val client: GitHubClient, private val dao: ContributorDao) {
 
   fun getContributors(): Single<List<Contributor>> {
