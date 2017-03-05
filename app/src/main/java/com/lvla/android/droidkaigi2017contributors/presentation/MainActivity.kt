@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter
 import com.lvla.android.droidkaigi2017contributors.R
 import com.lvla.android.droidkaigi2017contributors.databinding.ActivityMainBinding
 import com.lvla.android.droidkaigi2017contributors.databinding.ItemContributorBinding
-import com.lvla.android.droidkaigi2017contributors.di.Main
+import com.lvla.android.droidkaigi2017contributors.di.MainModule
 import com.lvla.android.droidkaigi2017contributors.domain.entity.Contributor
 import com.squareup.picasso.Picasso
 import timber.log.Timber
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.Contract {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    (application as App).component.plus(Main(this)).inject(this)
+    (application as App).component.plus(MainModule(this)).inject(this)
     binding.listView.numColumns = 4
     presenter.getContributors()
   }

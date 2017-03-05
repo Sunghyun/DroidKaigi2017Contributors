@@ -69,5 +69,5 @@ class ApplicationModule(private val applicationContext: App) {
 @Singleton
 @Component(modules = arrayOf(ApplicationModule::class))
 interface ApplicationComponent {
-  fun plus(m: Main): MainComponent
+  fun plus(m: MainModule): MainComponent
 }

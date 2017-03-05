@@ -7,13 +7,13 @@ import dagger.Provides
 import dagger.Subcomponent
 
 @Module
-class Main(private val contract: MainPresenter.Contract) {
+class MainModule(private val contract: MainPresenter.Contract) {
 
   @Provides
   fun provideContract() = contract
 }
 
-@Subcomponent(modules = arrayOf(Main::class))
+@Subcomponent(modules = arrayOf(MainModule::class))
 interface MainComponent{
   fun inject(a: MainActivity)
 }
