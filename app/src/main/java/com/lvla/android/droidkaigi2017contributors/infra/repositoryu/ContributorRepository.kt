@@ -12,7 +12,7 @@ class ContributorRepository @Inject constructor(private val client: GitHubClient
 
   fun getContributors(): Single<List<Contributor>> {
     return client.fetchContributors()
-        .doOnEvent { list, throwable -> list?.let { dao.insert(it) } }
+        .doOnEvent { list, _ -> list?.let { dao.insert(it) } }
         .onErrorResumeNext { dao.findAll() }
   }
 }

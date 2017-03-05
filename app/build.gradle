@@ -35,7 +35,7 @@ configurations {
 }
 dependencies {
     final supportLibVersion     = "25.1.1"
-    final ormaVersion           = "4.1.1"
+    final ormaVersion           = "4.2.0"
     final retrofitVersion       = "2.1.0"
     final okHttpVersion         = "3.6.0"
     final daggerVersion         = "2.9"
@@ -45,7 +45,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
 
-    kapt 'com.android.databinding:compiler:2.2.2'
+    kapt 'com.android.databinding:compiler:2.3.0'
 
     // Orma
     compile "com.github.gfx.android.orma:orma:$ormaVersion"
