@@ -15,6 +15,5 @@ class ContributorDao @Inject constructor(ormaHolder: ApplicationModule.OrmaHolde
     orma.transactionSync { orma.prepareInsertIntoContributor(OnConflict.REPLACE).executeAll(contributors) }
   }
 
-  fun findAll(): Single<List<Contributor>>
-      = orma.selectFromContributor().executeAsObservable().toList()
+  fun findAll(): List<Contributor> = orma.selectFromContributor().toList()
 }

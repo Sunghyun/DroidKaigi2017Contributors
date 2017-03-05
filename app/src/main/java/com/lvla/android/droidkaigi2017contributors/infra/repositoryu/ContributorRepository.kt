@@ -3,6 +3,7 @@ package com.lvla.android.droidkaigi2017contributors.infra.repositoryu
 import com.lvla.android.droidkaigi2017contributors.domain.entity.Contributor
 import com.lvla.android.droidkaigi2017contributors.infra.api.GitHubClient
 import com.lvla.android.droidkaigi2017contributors.infra.dao.ContributorDao
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,9 +11,9 @@ import javax.inject.Singleton
 @Singleton
 class ContributorRepository @Inject constructor(private val client: GitHubClient, private val dao: ContributorDao) {
 
-  fun getContributors(): Single<List<Contributor>> {
+  fun getContributors(): Observable<List<Contributor>> {
     return client.fetchContributors()
-        .doOnEvent { list, _ -> list?.let { dao.insert(it) } }
-        .onErrorResumeNext { dao.findAll() }
+        .doOnNext { users -> dao.insert(users) }
+        .onErrorReturn { dao.findAll() }
   }
 }
